@@ -12,31 +12,74 @@ const commands = [
     command: '!help',
     operatorOnly: false,
     function: (game, message) => {
-      const helpMsg = `\`\`\`You can private message me these commands except for checking other players!
-        !top10 - Retrieves top 10 highest level players
-        !top10 <gold, spells, level, stolen, stole, gambles, events, bounty> - Retrieves top 10 highest of selected section
-        !stats - Sends a PM with your stats
-        !stats <@Mention of player> - Sends a PM with the players stats (without < > and case-senstive)
-        !equip - Sends a PM with your equipment
-        !equip <@Mention of player> - Sends a PM with the players equipment (without < > and case-senstive)
-        !character - Sends PM with your stats and equipment
-        !character <@Mention of player> - Sends a PM with the players equipment and stats (without < > and case-senstive)
-        !map - Displays the worlds locations
-        !castspell - Lists spells available to cast
-        !castspell <spell> - Casts a global spell onto Idle-RPG
-        !eventlog - Lists up to 15 past events
-        !eventlog <@Mention of player> - Lists up to 15 past events of mentioned player
-        !pvplog - Lists up to 15 past PvP events
-        !pvplog <@Mention of player> - Lists up to 15 past PvP events of mentioned player
-        !mention <on|off> - Change if events relating to you will @Mention you
-        !pm <on|off|filtered> - Change if events relating to you will be private messaged to you
-        !gender <male|female|neutral|neuter> - Change your character's gender
-        !lore <Map Name> - Retrieves the lore of map selected
-        !bounty <@Mention of player> <Bounty Amount> - Puts a bounty on the death of a player
-        !spellbook - Returns list of spells your character has learned
-        !inventory - Displays what your character has in his/her inventory
-        \`\`\``;
-      message.author.send(helpMsg);
+    	const helpEmbed = {
+    		"title": "Help",
+		    "description": "This is a list of available commands.\nYou can private message me these commands except for commands that mention other players.\ncommands wrapped in `[]` are optional.",
+		    "timestamp": moment(),
+		    "fields": [
+		    	{
+		    		"name": "!top10 [gold, spells, level, stolen, stole, gambles, events, bounty]",
+		    		"value":"Retrieves top 10 highest of selected section. (default level)"
+		    	},
+					{
+						"name": "!stats [@mention]",
+						"value":"Sends a PM with the players stats. (default you)"
+					},
+					{
+						"name": "!equip [@mention]",
+						"value":"Sends a PM with the players equipment. (default you)"
+					},
+					{
+						"name": "!character [@mention]",
+						"value":"Sends a PM with the players equipment and stats. (default you)"
+					},
+					{
+						"name": "!map",
+						"value":"Displays the worlds locations"
+					},
+					{
+						"name": "!castspell [spell]",
+						"value":"Casts a global spell onto Idle-RPG (default lists spells available to cast.)"
+					},
+					{
+						"name": "!eventlog [@mention]",
+						"value":"Lists up to 15 past events of mentioned player (default all players)"
+					},
+					{
+						"name": "!pvplog [@mention]",
+						"value":"Lists up to 15 past PvP events of mentioned player (default all players)"
+					},
+					{
+						"name": "!mention <on|off>",
+						"value":"Change if events relating to you will @Mention you"
+					},
+					{
+						"name": "!pm <on|off|filtered>",
+						"value":"Change if events relating to you will be private messaged to you"
+					},
+					{
+						"name": "!gender <male|female|neutral|neuter>",
+						"value":"Change your character's gender"
+					},
+					{
+						"name": "!lore <Map Name>",
+						"value":"Retrieves the lore of map selected"
+					},
+					{
+						"name": "!bounty <@Mention of player> <Bounty Amount>",
+						"value":"Puts a bounty on the death of a player"
+					},
+					{
+						"name": "!spellbook",
+						"value":"Returns list of spells your character has learned"
+					},
+					{
+						"name": "!inventory",
+						"value":"Displays what your character has in his/her inventory"
+					}
+		    ]
+    	}
+      message.author.send({helpEmbed});
     }
   },
 

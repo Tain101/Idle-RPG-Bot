@@ -366,41 +366,89 @@ class Helper {
     }
   }
 
-  generateSpellBookString(player) {
-    let spellBookString = '\`\`\`Here\'s your spellbook!\n';
+  generateSpellBookEmbed(player) {
+    let spellBookEmbed = {
+    	'title': 'Here\'s your spellbook!'
+    	"fields": []
+    };
     player.spells.forEach((spell) => {
-      spellBookString = spellBookString.concat(`    ${spell.name} - ${spell.description}\n`);
+    	spellBookEmbed.fields.push({
+    		'name':`${spell.name}`,
+    		'description':`${spell.description}`
+    	});
     });
-    spellBookString = spellBookString.concat('\`\`\`');
 
-    return spellBookString;
+    return spellBookEmbed;
   }
 
-  generateStatsString(player) {
-    return `\`\`\`Here are your stats!
-    Health: ${player.health} / ${enumHelper.maxHealth(player.level)}
-    Mana: ${player.mana} / ${enumHelper.maxMana(player.level)}
-    Level: ${player.level}
-    Experience: ${player.experience} / ${player.level * 15}
-    Class: ${player.class}
-    Gender: ${player.gender}
-    Gold: ${player.gold}
-    Map: ${player.map.name}
-    Bounty: ${player.currentBounty}
-
-    Stats (Sum of stats with equipment):
-      Strength: ${player.stats.str} (${this.sumPlayerTotalStrength(player)})
-      Dexterity: ${player.stats.dex} (${this.sumPlayerTotalDexterity(player)})
-      Endurance: ${player.stats.end} (${this.sumPlayerTotalEndurance(player)})
-      Intelligence: ${player.stats.int} (${this.sumPlayerTotalIntelligence(player)})
-      Luck: ${player.stats.luk} (${this.sumPlayerTotalLuck(player)})
-
-    Born: ${this.toTimeFormat(Number(player.createdAt))}
-    Events: ${player.events}
-    Gambles: ${player.gambles}
-    Items Stolen: ${player.stole}
-    Items Lost: ${player.stolen}
-    Spells Casted: ${player.spellCasted}
+  generateStatsEmbed(player) {
+  	const statsEmbed = {
+  		'title': 'Here are your stats!',
+  		'fields': [
+  		{
+  			'title': 'Health',
+  			'description': `${player.health} / ${enumHelper.maxHealth(player.level)}`.toString()
+  		},
+  		{
+  			'title': 'Mana',
+  			'description': `${player.mana} / ${enumHelper.maxMana(player.level)}`.toString()
+  		},
+  		{
+  			'title': 'Level',
+  			'description': `${player.level}`.toString()
+  		},
+  		{
+  			'title': 'Experience',
+  			'description': `${player.experience} / ${player.level * 15}`.toString()
+  		},
+  		{
+  			'title': 'Class',
+  			'description': `${player.class}`.toString()
+  		},
+  		{
+  			'title': 'Gender',
+  			'description': `${player.gender}`.toString()
+  		},
+  		{
+  			'title': 'Gold',
+  			'description': `${player.gold}`.toString()
+  		},
+  		{
+  			'title': 'Map',
+  			'description': `${player.map.name}`.toString()
+  		},
+  		{
+  			'title': 'Bounty',
+  			'description': `${player.currentBounty}`.toString()
+  		},
+  		{
+  			'title':'Stats (Sum of stats with equipment):'
+  			'description':`Strength: ${player.stats.str} (${this.sumPlayerTotalStrength(player)})\nDexterity: ${player.stats.dex} (${this.sumPlayerTotalDexterity(player)})\nEndurance: ${player.stats.end} (${this.sumPlayerTotalEndurance(player)})\nIntelligence: ${player.stats.int} (${this.sumPlayerTotalIntelligence(player)})\nLuck: ${player.stats.luk} (${this.sumPlayerTotalLuck(player)})`.toString()
+  		},
+    	{
+    		'title': 'Born',
+    		'description': `${this.toTimeFormat(Number(player.createdAt))}`.toString()
+    	},
+    	{
+    		'title': 'Events',
+    		'description': `${player.events}`.toString()
+    	},
+    	{
+    		'title': 'Gambles',
+    		'description': `${player.gambles}`.toString()
+    	},
+    	{
+    		'title': 'Items Stolen' ,
+    		'description': `${player.stole}`.toString()
+    	},
+    	{
+    		'title': 'Items Lost' ,
+    		'description': `${player.stolen}`.toString()
+    	},
+    	{
+    		'title': 'Spells Casted',
+    		'description': `${player.spellCasted}`.toString()
+    	},
     Kills:
       Monsters: ${player.kills.mob}
       Players: ${player.kills.player}
@@ -414,6 +462,10 @@ class Helper {
     Past Events:
       ${this.generateLog(player, 5).replace('Heres what you have done so far:\n      ', '')}
       \`\`\``;
+
+      	]
+  	};
+  	return statsEmbed;
   }
 
   generatePreviousOwnerString(equipment) {
@@ -454,7 +506,7 @@ class Helper {
     return `\`\`\`Here is your inventory!
     Equipment:
       ${player.inventory.equipment.map(equip => equip.name).join('\n      ')}
-    
+
     Items:
       ${player.inventory.items.map(item => item.name).join('\n      ')}
       \`\`\``;
